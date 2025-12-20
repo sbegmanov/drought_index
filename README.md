@@ -34,3 +34,14 @@ chmod +x code/get_ghcnd_stations.bash
 
 # check if files executable
 ls -lth code 
+
+
+## Useful Git commands
+git status
+git add . (commit all, use rarely)
+git add environment.yml
+git commit -m "Comment"
+git commit --amend (for change comments)
+touch data/text.txt (add text file)
+rm data/text.txt
+git push
