@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#code/get_ghcnd_data.bash ghcnd_all.tar.gz
+#code/get_ghcnd_data.bash ghcnd_all.tar.gz  #(large files specifically commented)
 code/get_ghcnd_all_files.bash
 
 # get listing of types of data found at each weather station
