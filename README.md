@@ -45,3 +45,7 @@ git commit --amend (for change comments)
 touch data/text.txt (add text file)
 rm data/text.txt
 git push
+# used to remove .snakemake from github website.
+git rm -r --cached .snakemake/
+git commit -m "Remove .snakemake"
+git push origin main
