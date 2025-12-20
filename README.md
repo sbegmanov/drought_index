@@ -2,7 +2,7 @@
 Study on world drought. Based on Riffomonas Project YouTube Channel
 
 
-## data sources
+## data sources (noaa ghcn daily)
 https://www.ncei.noaa.gov/pub/data/ghcn/daily/
 
 ## Useful commands used in this project
@@ -35,6 +35,17 @@ chmod +x code/get_ghcnd_stations.bash
 # check if files executable
 ls -lth code 
 
+## Snakemake cmds
+mamba install -c conda-forge -c bioconda snakemake
+snakemake --dry-run get_all_archive
+snakemake -np get_all_archive
+snakemake -np get_all_filenames
+snakemake -np get_inventory
+snakemake -np (for ouput targets)
+snakemake -c 1 (what jobs executed in the project)
+mamba install -c conda-forge graphviz
+snakemake --dag targets | dot -Tpng > dag.png
+rm dag.png
 
 ## Useful Git commands
 git status
@@ -49,3 +60,4 @@ git push
 git rm -r --cached .snakemake/
 git commit -m "Remove .snakemake"
 git push origin main
+
