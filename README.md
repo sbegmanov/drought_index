@@ -1,5 +1,7 @@
 # drought_index
 Study on world drought. Based on Riffomonas Project YouTube Channel
+
+
 ## data sources
 https://www.ncei.noaa.gov/pub/data/ghcn/daily/
 
