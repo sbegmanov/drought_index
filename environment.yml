@@ -4,5 +4,6 @@ channels:
   - base
   - R
 dependencies:
-  - r-base
-  - r-tidyverse
+  - r-base = 4.13
+  - r-tidyverse = 4.5.2
+  - m2-wget = 1.25.01
