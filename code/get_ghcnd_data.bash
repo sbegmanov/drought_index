@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 file=$1
 
 rm data/$file

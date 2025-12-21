@@ -5,7 +5,7 @@ Study on world drought. Based on Riffomonas Project YouTube Channel
 ## data sources (noaa ghcn daily)
 https://www.ncei.noaa.gov/pub/data/ghcn/daily/
 
-## Useful commands used in this project
+## Useful commands used in this project (used git bash command, windows cmd)
 # creating yml environment (called drought):
 mamba env create -f environment.yml
 conda activate drought
@@ -41,19 +41,24 @@ snakemake --dry-run get_all_archive
 snakemake -np get_all_archive
 snakemake -np get_all_filenames
 snakemake -np get_inventory
-snakemake -np (for ouput targets)
-snakemake -c 1 (what jobs executed in the project)
+# for ouput targets
+snakemake -np 
+# what jobs executed in the project
+snakemake -c 1 
 mamba install -c conda-forge graphviz
 snakemake --dag targets | dot -Tpng > dag.png
 rm dag.png
 
 ## Useful Git commands
 git status
-git add . (commit all, use rarely)
+# commit all, use rarely
+git add . 
 git add environment.yml
-git commit -m "Comment"
-git commit --amend (for change comments)
-touch data/text.txt (add text file)
+git commit -m "Comments"
+# change comments in project
+git commit --amend 
+# add text file
+touch data/text.txt 
 rm data/text.txt
 git push
 # used to remove .snakemake from github website.
