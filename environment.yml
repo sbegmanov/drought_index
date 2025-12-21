@@ -10,3 +10,4 @@ dependencies:
   - m2-wget = 1.25.01
   - snakemake==9.14.5
   - graphviz=14.1.0
+  - coreutils=8.32.5

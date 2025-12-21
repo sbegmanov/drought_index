@@ -5,14 +5,15 @@ Study on world drought. Based on Riffomonas Project YouTube Channel
 ## data sources (noaa ghcn daily)
 https://www.ncei.noaa.gov/pub/data/ghcn/daily/
 
-## Useful commands used in this project (used git bash command, windows cmd)
+## Useful commands used in this project (used git bash command, parallelly cmd on VS code)
 # creating yml environment (called drought):
 mamba env create -f environment.yml
 conda activate drought
 conda env list
 conda deactivate
 mamba env remove --name drought
-
+# Worked on Windows
+conda install -c conda-forge m2-coreutils
 mamba install -c conda-forge m2-wget=1.25.0.1 (Windows, but wget did nott work, used curl -L -o data\ghcnd_all.tar.gz https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_all.tar.gz)
 
 # bash commands (windows):
@@ -66,3 +67,13 @@ git rm -r --cached .snakemake/
 git commit -m "Remove .snakemake"
 git push origin main
 
+## File extraction
+tar xvzf data/ghcnd_all.tar.gz -C data/
+rm -rf data/ghcnd_all
+# extract only 3 dly files
+tar xvzf data/ghcnd_all.tar.gz -C data/ ghcnd_all/ASN00010727.dly ghcnd_all/ASN00010732.dly ghcnd_all/ASN00010738.dly
+ls data/ghcnd_all
+
+# some trick on R
+composite <- .Last.value
+count(composite, ID)
