@@ -35,11 +35,7 @@ widths <- c(11, 4, 2, 4, rep(c(5, 1, 1, 1), 31))
 headers <- c("ID", "YEAR", "MONTH", "ELEMENT", unlist(map(1:31, quadruple)))
 
 
- 
-    pull(path) |>
-    map_dfr(., ~read_tsv(archive_read("data/ghcnd_all.tar.gz", .x)))
-
-# dly_files <- list.files("data/ghcnd_all", full.names = TRUE)
+ # dly_files <- list.files("data/ghcnd_all", full.names = TRUE)
 dly_files <- archive("data/ghcnd_all.tar.gz") |>
     filter(str_detect(path, "dly")) |>
     slice_sample(n = 12) |>
