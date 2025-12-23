@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 library(tidyverse)
 library(glue)
 library(lubridate)
@@ -27,6 +29,7 @@ library(lubridate)
 # SFLAG31    269-269   Character
 # ------------------------------
 
+
 quadruple <- function(x) {
     c(glue("VALUE{x}"), glue("MFLAG{x}"), glue("QFLAG{x}"), glue("SFLAG{x}"))
 }
@@ -35,26 +38,53 @@ widths <- c(11, 4, 2, 4, rep(c(5, 1, 1, 1), 31))
 headers <- c("ID", "YEAR", "MONTH", "ELEMENT", unlist(map(1:31, quadruple)))
 
 
- # dly_files <- list.files("data/ghcnd_all", full.names = TRUE)
-dly_files <- archive("data/ghcnd_all.tar.gz") |>
-    filter(str_detect(path, "dly")) |>
-    slice_sample(n = 12) |>
-    pull(path)
 
-# Sys.time()
-dly_files |> map_dfr(~read_fwf(archive_read("data/ghcnd_all.tar.gz", .x),
+tday_julian <- yday(today())
+window <- 30
+process_xfiles <- function(x) {
+
+    print(x)
+
+    read_fwf(x,
         fwf_widths(widths, headers),
         na = c("NA", "-9999"),
         col_types = cols(.default = col_character()),
-        col_select = c(ID, YEAR, MONTH, ELEMENT, starts_with("VALUE")))) |>         
+        col_select = c(ID, YEAR, MONTH, starts_with("VALUE"))
+    ) |> # removed ELEMENT,
         rename_all(tolower) |>
-        filter(element == "PRCP") |>
-        select(-element) |>
-        pivot_longer(cols = starts_with("value"),
-        names_to = "day", values_to = "prcp") |>
+        # filter(element == "PRCP") |>
+        # select(-element) |>
+        pivot_longer(cols = starts_with("value"), names_to = "day", values_to = "prcp") |>
         drop_na() |>
-        mutate(day = str_replace(day, "value", ""),
-        date = ymd(glue("{year}-{month}-{day}")),
-        prcp = as.numeric(prcp) / 100) |>
+        filter(prcp != 0) |> # update
+        mutate(
+            day = str_replace(day, "value", ""),
+            date = ymd(glue("{year}-{month}-{day}")),
+            prcp = as.numeric(prcp) / 100
+        ) |>
         select(id, date, prcp) |>
-        write_tsv("data/composite_dly.tsv")
+        mutate(
+            julian_day = yday(date),
+            diff = tday_julian - julian_day,
+            is_in_window = case_when(
+                diff < window & diff > 0 ~ TRUE,
+                diff > window ~ FALSE,
+                tday_julian < window & diff + 365 < window ~ TRUE,
+                diff < 0 ~ FALSE
+            ),
+            year = year(date),
+            year = if_else(diff < 0 & is_in_window, year + 1, year)
+        ) |>
+        filter(is_in_window) |>
+        group_by(id, year) |>
+        summarize(prcp = sum(prcp), .groups = "drop")
+}
+
+x_files <- list.files("data/temp", full.names = TRUE)
+map_dfr(x_files, process_xfiles)
+
+d <- .Last.value
+d |> 
+    group_by(id, year) |>
+    summarize(prcp = sum(prcp), .groups = "drop") |>
+    write_tsv("data/ghcnd_tidy.tsv.gz")

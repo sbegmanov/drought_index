@@ -15,6 +15,17 @@ mamba env remove --name drought
 # Worked on Windows
 conda install -c conda-forge m2-coreutils
 mamba install -c conda-forge m2-wget=1.25.0.1 (Windows, but wget did not work, used curl -L -o data\ghcnd_all.tar.gz https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_all.tar.gz)
+# split tar.gz files
+split -n 40 data/ghcnd_all.tar.gz
+rm x*
+split -b 40000000 data/ghcnd_all.tar.gz
+ls x*
+wc -l x*
+ls x* | wc -l
+ls -lht x*
+ls -lth x*
+split -l 1000 data/ghcnd_all_files.txt
+head xaa or xaab
 
 # bash commands (windows):
 # check commands workable in bash format files
@@ -66,7 +77,8 @@ git push
 git rm -r --cached .snakemake/
 git commit -m "Remove .snakemake"
 git push origin main
-
+# rename the file:
+git mv code/read_dly_files.R code/read_split_dly_files.R
 ## File extraction
 tar xvzf data/ghcnd_all.tar.gz -C data/
 rm -rf data/ghcnd_all

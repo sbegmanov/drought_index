@@ -3,7 +3,8 @@ rule targets:
         "ghcnd_all.tar.gz",
         "ghcnd_all_files.txt",
         "ghcnd-inventory.txt",
-        "ghcnd-stations.txt"
+        "ghcnd-stations.txt",
+        "ghcnd_tidy.tsv.gz"
 
 rule get_all_archive:
     input:
@@ -50,4 +51,27 @@ rule get_station_data:
     shell:
         """
         {input.script} {params.file}
+        """
+
+rule concatenate_dly_files:
+    input:
+        script = "code/concatenate_dly.bash",
+        tarball = "ghcnd_all.tar.gz"
+    output:
+        "ghcnd_cat.fwf.gz"
+    shell:
+        """
+        {input.script}
+
+        """
+rule summarize_dly_files:
+    input:
+        bash_script = "code/concatenate_dly.bash",
+        r_script = "code/read_split_dly_files.R",
+        tarball = "ghcnd_all.tar.gz"
+    output:
+        "ghcnd_tidy.tsv.gz"
+    shell:
+        """
+        {input.bash_script}
         """
