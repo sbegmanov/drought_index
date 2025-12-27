@@ -7,7 +7,8 @@ rule targets:
         "ghcnd-stations.txt",
         "ghcnd_tidy.tsv.gz",
         "ghcnd_cat.gz",
-        "ghcnd_regions.tsv"
+        "ghcnd_regions.tsv",
+        "ghcnd_regions_years.tsv"
 
 rule get_all_archive:
     input:
@@ -96,6 +97,16 @@ rule aggregate_stations:
         data = "data/ghcnd-stations.txt",
     output:
         "ghcnd_regions.tsv"
+    shell:
+        """
+        {input.r_script}
+        """
+rule get_regions_years:
+    input:
+        r_script = "code/get_regions_years.R",
+        data = "data/ghcnd-inventory.txt",
+    output:
+        "ghcnd_regions_years.tsv"
     shell:
         """
         {input.r_script}

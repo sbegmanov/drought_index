@@ -2,6 +2,7 @@
 
 library(tidyverse)
 
+# Stations
 # ------------------------------
 # Variable   Columns   Type
 # ------------------------------
@@ -15,6 +16,7 @@ library(tidyverse)
 # HCN/CRN FLAG 77-79   Character
 # WMO ID       81-85   Character
 
+# Faster read using station vars
 read_fwf("data/ghcnd-stations.txt",
 col_positions = fwf_cols(
     id = c(1, 11),
@@ -32,7 +34,7 @@ mutate(latitude = round(latitude, 0),
 longtitude = round(longtitude, 0)) |>
 group_by(longtitude, latitude) |>
 mutate(region = cur_group_id()) |>
-write("data/gchnd_regions.tsv")
+write_tsv("data/gchnd_regions.tsv")
 
 # |> filter(region == 1113)
 # count(region) |>
