@@ -1,10 +1,13 @@
+
 rule targets:
     input:
         "ghcnd_all.tar.gz",
         "ghcnd_all_files.txt",
         "ghcnd-inventory.txt",
         "ghcnd-stations.txt",
-        "ghcnd_tidy.tsv.gz"
+        "ghcnd_tidy.tsv.gz",
+        "ghcnd_cat.gz",
+        "ghcnd_regions.tsv"
 
 rule get_all_archive:
     input:
@@ -16,6 +19,17 @@ rule get_all_archive:
     shell:
         """
         {input.script} {params.file}
+
+        """
+rule pipe:
+    input:
+        script = "code/pipe.bash",
+        tarball = "data/ghcnd_all.tar.gz"
+    output:
+        "ghcnd_cat.gz"
+    shell:
+        """
+        {input.script}
         """
 
 rule get_all_filenames:
@@ -74,4 +88,15 @@ rule summarize_dly_files:
     shell:
         """
         {input.bash_script}
+        """
+
+rule aggregate_stations:
+    input:
+        r_script = "code/merge_lat_long.R",
+        data = "data/ghcnd-stations.txt",
+    output:
+        "ghcnd_regions.tsv"
+    shell:
+        """
+        {input.r_script}
         """

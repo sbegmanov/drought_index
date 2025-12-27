@@ -81,3 +81,22 @@ dly_files |>
     ) |>
     select(id, date, prcp) |>
     write_tsv("data/composite_dly.tsv")
+
+# rounding numbers
+tibble(x = seq(-2, 2, 0.1),
+round = round(x),
+trunc = trunc(x),
+floor = floor(x),
+ceiling = ceiling(x),
+integer = as.integer(x),
+signif = signif(x, digits = 1)) |> print(n = Inf)
+
+x <- 100 * pi
+round(x)
+round(x, digits = -2)
+round(x, digits = -1)
+round(x, digits = 4)
+
+signif(x, digits = 1)
+signif(x, digits = 3)
+signif(x, digits = 6)
