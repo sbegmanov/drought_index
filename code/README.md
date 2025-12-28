@@ -38,8 +38,12 @@ chmod +x code/get_ghcnd_all.bash
 chmod +x code/get_ghcnd_stations.bash
 chmod +x code/read_split_dly_files.R
 
+# number of temp files
+ls -lth data/temp | wc -l
+grep "ANN ARBOR" data/ghcnd-stations.txt
+
 # check if files executable
-ls -lth code 
+ls -lth code/get_ghcnd_stations.bash
 
 ## Snakemake cmds
 mamba install -c conda-forge -c bioconda snakemake
@@ -54,6 +58,7 @@ snakemake -c 1
 mamba install -c conda-forge graphviz
 snakemake --dag targets | dot -Tpng > dag.png
 rm dag.png
+snakmake -R get_all_archive get_inventory get_station_data -c1
 
 # Work with tar.gz with a sample
 tar xvzf data/ghcnd_all.tar.gz ghcnd_all/US1IACW005.dly
