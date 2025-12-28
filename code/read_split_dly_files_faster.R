@@ -29,7 +29,6 @@ library(lubridate)
 # SFLAG31    269-269   Character
 # ------------------------------
 
-
 quadruple <- function(x) {
     c(glue("VALUE{x}"), glue("MFLAG{x}"), glue("QFLAG{x}"), glue("SFLAG{x}"))
 }
@@ -41,9 +40,7 @@ read_fwf("data/ghcnd_cat.gz",
     fwf_widths(widths, headers),
     na = c("NA", "-9999"),
     col_types = cols(.default = col_character()),
-    col_select = c(ID, YEAR, MONTH, ELEMENT, starts_with("VALUE")))
-    
-    #|> 
+    col_select = c(ID, YEAR, MONTH, ELEMENT, starts_with("VALUE"))) |> 
     rename_all(tolower) |>
     filter(element == "PRCP") |>
     select(-element) |>
