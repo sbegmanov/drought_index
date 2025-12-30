@@ -8,7 +8,8 @@ rule targets:
         "ghcnd_tidy.tsv.gz",
         "ghcnd_cat.gz",
         "ghcnd_regions.tsv",
-        "ghcnd_regions_years.tsv"
+        "ghcnd_regions_years.tsv",
+        "visuals/world_drought_on_2025_data.png"
 
 rule get_all_archive:
     input:
@@ -107,6 +108,17 @@ rule get_regions_years:
         data = "data/ghcnd-inventory.txt",
     output:
         "ghcnd_regions_years.tsv"
+    shell:
+        """
+        {input.r_script}
+        """
+rule plot_drought_by_region:
+    input:
+        r_script = "code/merge_weather_station_data.R",
+        prcp_data = "data/ghcnd_tidy.tsv.gz",
+        station_data = "data/gchnd_regions_years.tsv"
+    output:
+        "visuals/world_drought_on_2025_data.png"
     shell:
         """
         {input.r_script}
