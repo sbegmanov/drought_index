@@ -1,0 +1,30 @@
+---
+title: Wordl drought index
+authoer: Salam
+output: html_document
+github_repo: https://github.com/sbegmanov/drought_index
+---
+
+```{r echo = FALSE, message = FALSE}
+library(lubridate)
+```
+
+```{css echo = FALSE}
+.author, .title = {
+    display; none;
+}
+
+.main-container{
+    max-depth: 100%;
+}
+
+body {
+    background-color: black;
+    color: white;
+
+}
+```
+![](visuals/world_drought_on_2025_data.png)
+
+Last update on `r today()`  
+Site [developed](`r rmarkdown::metadata$github_repo`) by Salam

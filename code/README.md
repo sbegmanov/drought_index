@@ -106,3 +106,8 @@ ls data/ghcnd_all
 # some trick on R
 composite <- .Last.value
 count(composite, ID)
+
+# for HTML page
+mamba install -c conda-forge r-markdown
+R -e "library(rmarkdown); render('index.Rmd')"
+open index.html

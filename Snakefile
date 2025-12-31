@@ -9,7 +9,8 @@ rule targets:
         "ghcnd_cat.gz",
         "ghcnd_regions.tsv",
         "ghcnd_regions_years.tsv",
-        "visuals/world_drought_on_2025_data.png"
+        "visuals/world_drought_on_2025_data.png",
+         "index.html"
 
 rule get_all_archive:
     input:
@@ -122,4 +123,15 @@ rule plot_drought_by_region:
     shell:
         """
         {input.r_script}
+        """
+
+rule render_index:
+    input:
+        rmd = "index.Rmd",
+        png = "visuals/world_drought_on_2025_data.png",
+    output:
+        "index.html"
+    shell:
+        """
+        R -e "library(rmarkdown); render('{input.rmd}')"
         """
