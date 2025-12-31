@@ -3,6 +3,11 @@
 library(tidyverse)
 library(lubridate)
 library(glue)
+library(showtext)
+
+font_add_google("Roboto slab", family = "roboto-slab")
+font_add_google("Montserrat", family = "montserrat")
+showtext_auto()
 
 prcp_data <- read_tsv("data/ghcnd_tidy.tsv.gz")
 station_data <- read_tsv("data/gchnd_regions_years.tsv")
@@ -67,13 +72,13 @@ lat_long_prcp |>
                          midpoint = 0,
                          breaks = c(-2, -1, 0, 1, 2),
                          labels = c("<-2", "-1", "0", "1", ">2")) +
-    labs(title = glue( "Amount of precipitation for {start} to {end}"),
+    labs(title = glue("Amount of precipitation for {start} to {end}"),
          substitute = "Standardized Z-scores for at least the past 50 years",
         capton = "Precipiation data collected from GHCN daily data at NOAA") +
     theme(plot.background = element_rect(fill = "black", color = "black"),
         panel.background = element_rect(fill = "black"),
-        plot.title = element_text(color = "#f5f5f5"),
-        plot.subtitle = element_text(color = "#f5f5f5"),
+        plot.title = element_text(color = "#f5f5f5", size = 18, family = "robot-slab"),
+        plot.subtitle = element_text(color = "#f5f5f5", family = "montserrat"),
         plot.caption = element_text(color = "#f5f5f5"),
         panel.grid = element_blank(), 
         legend.background = element_blank(),

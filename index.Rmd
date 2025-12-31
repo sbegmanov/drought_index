@@ -20,8 +20,9 @@ library(lubridate)
 
 body {
     background-color: black;
-    color: white;
-
+    color: #f5f5f5;
+    font-size: 1.2vw;
+    font-family; "Montserrat", sans-serif;
 }
 ```
 ![](visuals/world_drought_on_2025_data.png)

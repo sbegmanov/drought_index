@@ -8,6 +8,7 @@ mamba env remove --name drought
 # Worked on Windows
 conda install -c conda-forge m2-coreutils
 mamba install -c conda-forge m2-wget=1.25.0.1 (Windows, but wget did not work, used curl -L -o data\ghcnd_all.tar.gz https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_all.tar.gz)
+mamba install -c conda-forge r-showtext
 # split tar.gz files
 split -n 40 data/ghcnd_all.tar.gz
 rm x*
@@ -86,6 +87,10 @@ git commit --amend
 touch data/text.txt 
 rm data/text.txt
 git push
+git push --force
+git log
+git log --online
+git rebase -i a811842 #commited id (pick squash)
 # used to remove .snakemake from github website.
 git rm -r --cached .snakemake/
 git commit -m "Remove .snakemake"
