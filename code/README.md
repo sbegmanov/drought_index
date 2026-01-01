@@ -5,6 +5,7 @@ conda activate drought
 conda env list
 conda deactivate
 mamba env remove --name drought
+mamba env update -f environment.yml
 # Worked on Windows
 conda install -c conda-forge m2-coreutils
 mamba install -c conda-forge m2-wget=1.25.0.1 (Windows, but wget did not work, used curl -L -o data\ghcnd_all.tar.gz https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd_all.tar.gz)
@@ -16,11 +17,12 @@ split -b 40000000 data/ghcnd_all.tar.gz
 ls x*
 wc -l x*
 ls x* | wc -l
+ls ./map_tempdir/| wc -l
 ls -lht x*
 ls -lth x*
 split -l 1000 data/ghcnd_all_files.txt
 head xaa or xaab
-
+cat README.md
 # bash commands (windows):
 # check commands workable in bash format files
 bash code/get_ghcnd_all.bash 
@@ -90,12 +92,18 @@ git push
 git push --force
 git log
 git log --online
+git log --pretty=oneline
+git log --pretty=format:"%h"
+git log --pretty=format:"%H"
+git log --pretty=format:"%h %ai"
+git log --pretty=format:"%h %ai %s"
+git log --pretty=format:"%h %ai %s" --after "2025-12-30" visuals/world_drought.png > logt.txt
 git rebase -i a811842 #commited id (pick squash)
 # used to remove .snakemake from github website.
 git rm -r --cached .snakemake/
 git commit -m "Remove .snakemake"
 git push origin main
-
+git cat-file -p cd835d7:visuals/world_drought_on_2025_data.png > map_tempdir/2025-03-01.png
 # remove folder
 rm -rf folder/
 

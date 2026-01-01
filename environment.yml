@@ -13,3 +13,4 @@ dependencies:
   - graphviz=14.1.0
   - coreutils=8.32.5
   - r-showtext = 0.9_7
+  - imagemagick = 7.1.0

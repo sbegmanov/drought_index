@@ -1,6 +1,6 @@
 data/
 Rplots.pdf
-
+map_tempdir/
 # History files
 .Rhistory
 .Rapp.history
